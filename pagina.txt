@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ESP32 - Monitoreo de Sensores</title>
+
+    <!-- Firebase SDK v8 -->
+    <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-database.js"></script>
+
+    <!-- Configuración de Firebase -->
+    <script>
+      const firebaseConfig = {
+        apiKey: "AIzaSyCieImz5v4_jQqJZmR7UVKEodCyq5RGxes",
+        authDomain: "sensor-iot-5c5b0.firebaseapp.com",
+        databaseURL: "https://sensor-iot-5c5b0-default-rtdb.firebaseio.com",
+        projectId: "sensor-iot-5c5b0",
+        storageBucket: "sensor-iot-5c5b0.appspot.com",
+        messagingSenderId: "500124966076",
+        appId: "1:500124966076:web:bf21853277ef759b02c4b9",
+        measurementId: "G-2G8QHM6ZY6"
+      };
+
+      firebase.initializeApp(firebaseConfig);
+      const db = firebase.database();
+    </script>
+
+    <!-- Estilos -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="icon" type="image/png" href="favicon.png">
+  </head>
+
+  <body>
+    <!-- Título -->
+    <div class="topnav">
+      <h1>Monitoreo de Sensores Magnéticos <i class="fas fa-magnet"></i></h1>
+    </div>
+
+    <!-- Contenido principal -->
+    <div class="content-sign-in">
+      <div class="cards">
+        <!-- Sensores 1 a 9 -->
+        <div class="card" id="sensor1">Sensor 1: <span class="reading" id="s1">---</span></div>
+        <div class="card" id="sensor2">Sensor 2: <span class="reading" id="s2">---</span></div>
+        <div class="card" id="sensor3">Sensor 3: <span class="reading" id="s3">---</span></div>
+        <div class="card" id="sensor4">Sensor 4: <span class="reading" id="s4">---</span></div>
+        <div class="card" id="sensor5">Sensor 5: <span class="reading" id="s5">---</span></div>
+        <div class="card" id="sensor6">Sensor 6: <span class="reading" id="s6">---</span></div>
+        <div class="card" id="sensor7">Sensor 7: <span class="reading" id="s7">---</span></div>
+        <div class="card" id="sensor8">Sensor 8: <span class="reading" id="s8">---</span></div>
+        <div class="card" id="sensor9">Sensor 9: <span class="reading" id="s9">---</span></div>
+      </div>
+    </div>
+
+    <!-- Script para leer sensores -->
+    <script>
+      // Escucha los sensores en tiempo real
+      function updateSensors() {
+        for (let i = 1; i <= 9; i++) {
+          firebase.database().ref("sensores/sensor" + i).on("value", function(snapshot) {
+            const estado = snapshot.val();
+            const elemento = document.getElementById("s" + i);
+            if (elemento) {
+              elemento.innerText = (estado === 1) ? "ACTIVADO" : "DESACTIVADO";
+              elemento.style.color = (estado === 1) ? "green" : "red";
+            }
+          });
+        }
+      }
+
+      // Llama la función al cargar
+      window.onload = updateSensors;
+    </script>
+  </body>
+</html>
