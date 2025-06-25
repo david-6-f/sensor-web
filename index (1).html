@@ -1,0 +1,73 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Estado de Sensores Magnéticos</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      text-align: center;
+      padding: 20px;
+    }
+    h1 {
+      color: #333;
+    }
+    .sensor-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 20px;
+      margin-top: 30px;
+    }
+    .sensor-btn {
+      padding: 20px;
+      border: none;
+      border-radius: 8px;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: default;
+    }
+    .activo {
+      background-color: green;
+    }
+    .inactivo {
+      background-color: red;
+    }
+  </style>
+</head>
+<body>
+  <h1>Monitoreo de Sensores Magnéticos</h1>
+  <div class="sensor-grid">
+    <!-- Botones de sensores -->
+    <button id="sensor1" class="sensor-btn inactivo">Sensor 1</button>
+    <button id="sensor2" class="sensor-btn inactivo">Sensor 2</button>
+    <button id="sensor3" class="sensor-btn inactivo">Sensor 3</button>
+    <button id="sensor4" class="sensor-btn inactivo">Sensor 4</button>
+    <button id="sensor5" class="sensor-btn inactivo">Sensor 5</button>
+    <button id="sensor6" class="sensor-btn inactivo">Sensor 6</button>
+    <button id="sensor7" class="sensor-btn inactivo">Sensor 7</button>
+    <button id="sensor8" class="sensor-btn inactivo">Sensor 8</button>
+    <button id="sensor9" class="sensor-btn inactivo">Sensor 9</button>
+  </div>
+
+  <script>
+    // Simulación: Aquí deberías reemplazar por tu lógica de lectura desde tu ESP32 o Firebase
+    function actualizarEstado(sensor, activo) {
+      const boton = document.getElementById(sensor);
+      boton.className = "sensor-btn " + (activo ? "activo" : "inactivo");
+    }
+
+    // Ejemplo de cómo actualizar los estados desde JavaScript (simulación)
+    // En producción, aquí deberías usar fetch() desde ESP32, WebSocket o Firebase
+    setInterval(() => {
+      for (let i = 1; i <= 9; i++) {
+        const estado = Math.random() > 0.5; // Simula estado aleatorio
+        actualizarEstado("sensor" + i, estado);
+      }
+    }, 2000);
+  </script>
+</body>
+</html>
